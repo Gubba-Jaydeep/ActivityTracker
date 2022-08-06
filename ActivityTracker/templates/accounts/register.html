@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Register {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+
+              <form role="form" method="post">
+                  {% csrf_token %}
+              
+                <div class="card-header">
+                  <h5 class="title">Register</h5>
+                  <h6 class="card-category">
+                      Enter your Details
+                  </h6>
+                </div>
+
+                <div class="card-body">
+                    {{ form.as_p }}
+                    
+                </div>
+                <div class="card-footer">
+                  <button type="submit" name="register" class="btn btn-fill btn-primary">Register</button>
+                  &nbsp; &nbsp;
+                  Have an account? <a href="{% url 'login' %}" class="text-primary">Login</a>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+      </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

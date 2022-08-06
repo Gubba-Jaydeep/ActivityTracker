@@ -1,0 +1,43 @@
+{% load filter %}
+<div class="sidebar">
+    <div class="sidebar-wrapper">
+        <div class="logo">
+
+            <a target="_blank" rel="sponsored noopener noreferrer"
+               href="#" class="simple-text logo-normal text-center"
+               style="font-size:21px;font-weight:400;text-transform: capitalize;font-family: Arial, Helvetica, sans-serif;">
+                {% if request.user.is_authenticated %}
+                    Process List
+                {% else %}
+                    Hi There!
+                {% endif %}
+            </a>
+        </div>
+
+
+        {% if request.user.is_authenticated %}
+            <ul class="nav">
+                <li class="active">
+                    <a target="_blank"
+                       href="#">
+                        <i class="tim-icons icon-spaceship"></i>
+                        <p>Hello..</p>
+                    </a>
+                </li>
+            </ul>
+
+        {% else %}
+            <ul class="nav">
+                <li class="active">
+                    <a target="_blank"
+                       href="#">
+                        <i class="tim-icons icon-spaceship"></i>
+                        <p>Hello..</p>
+                    </a>
+                </li>
+            </ul>
+        {% endif %}
+
+
+    </div>
+</div>

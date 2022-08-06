@@ -9,28 +9,31 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k0nvh-3@g=4abau%y&805h&=!&t@@*98-#o-8tj^^jxz0b6yep'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-k!0x^_h&3+e0+45)8ubt&%cq4k@*o#rdnjk-j!i7sh_+gynw-n')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
-
+# load production server from .env
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '172.17.32.222', 'rpadashboard.cltp.com',
+                 config('SERVER', default='127.0.0.1')]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'app.apps.AppConfig',
+    'authentication.apps.AuthenticationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,13 +52,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SITE_ID = 2
 ROOT_URLCONF = 'ActivityTracker.urls'
+LOGIN_REDIRECT_URL = "home"  # Route defined in app/urls.py
+# LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
+TEMPLATE_DIR = os.path.join(BASE_DIR, "ActivityTracker/templates")
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,12 +72,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                # make your file entry here.
+                'filter_tags': 'app.templatetags.filter',
+            }
         },
     },
 ]
 
-WSGI_APPLICATION = 'ActivityTracker.wsgi.application'
 
+WSGI_APPLICATION = 'ActivityTracker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -80,7 +92,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -100,6 +111,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -116,9 +131,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'ActivityTracker/static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'mailrelay.cleartrip.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'jaydeepguppa@gmail.com'
+EMAIL_HOST_PASSWORD = 'dwtgufzvnnatksdh'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'jaydeepguppa@gmail.com'
+
+import warnings
+
+warnings.filterwarnings('ignore')

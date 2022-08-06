@@ -1,0 +1,16 @@
+
+
+  <script>
+    $(document).ready(function() {
+      $().ready(function() {
+        $('#dark_mode_toggle').click(function () {
+            if ($(this).is(":checked")) {
+                $('body').removeClass('white-content');
+            }
+            else{
+                $('body').addClass('white-content');
+            }
+        })
+      });
+    });
+  </script>
