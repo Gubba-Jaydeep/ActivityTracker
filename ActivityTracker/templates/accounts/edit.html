@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Edit Account {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+
+              <form role="form" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+              
+                <div class="card-header">
+                  <h5 class="title">Edit your account</h5>
+                  <h6 class="card-category">
+                      Edit your account using the below form
+                  </h6>
+                </div>
+
+                <div class="card-body">
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
+                    
+                </div>
+                <div class="card-footer">
+                  <button type="submit" name="changes" class="btn btn-fill btn-primary">Save Changes</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+      </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

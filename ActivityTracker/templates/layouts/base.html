@@ -27,6 +27,16 @@
 
 <body class="white-content">
   <div class="wrapper">
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li class="{{ message.tags }}">
+              {{ message|safe }}
+              <a href="#" class="close">x</a>
+          </li>
+          {% endfor %}
+      </ul>
+      {% endif %}
 
     {% include 'includes/sidebar.html' %}
 

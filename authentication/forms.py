@@ -1,13 +1,15 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Profile
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         label="Username",
         widget=forms.TextInput(
             attrs={
-                "placeholder" : "Username",
+                "placeholder": "Username",
                 "class": "form-control"
             }
         ))
@@ -15,10 +17,11 @@ class LoginForm(AuthenticationForm):
         label="Password",
         widget=forms.PasswordInput(
             attrs={
-                "placeholder" : "Password",
+                "placeholder": "Password",
                 "class": "form-control"
             }
         ))
+
 
 class UserRegistrationForm(UserCreationForm):
     # UserCreationForm takes care of matching cleaning and validating the data
@@ -26,7 +29,7 @@ class UserRegistrationForm(UserCreationForm):
         label="Username",
         widget=forms.TextInput(
             attrs={
-                "placeholder" : "Username",
+                "placeholder": "Username",
                 "class": "form-control"
             }
         ))
@@ -50,7 +53,7 @@ class UserRegistrationForm(UserCreationForm):
         label="Email",
         widget=forms.EmailInput(
             attrs={
-                "placeholder" : "Email",
+                "placeholder": "Email",
                 "class": "form-control"
             }
         ))
@@ -58,7 +61,7 @@ class UserRegistrationForm(UserCreationForm):
         label="Password",
         widget=forms.PasswordInput(
             attrs={
-                "placeholder" : "Password",
+                "placeholder": "Password",
                 "class": "form-control"
             }
         ))
@@ -66,7 +69,7 @@ class UserRegistrationForm(UserCreationForm):
         label="Confirm Password",
         widget=forms.PasswordInput(
             attrs={
-                "placeholder" : "Password check",
+                "placeholder": "Password check",
                 "class": "form-control"
             }
         ))
@@ -74,3 +77,16 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+
+class ProfileEditForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    class Meta:
+        model = Profile
+        fields = ('date_of_birth', 'photo')
