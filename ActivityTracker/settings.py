@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-k!0x^_h&3+e0+45)8ubt&
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '172.17.32.222', 'rpadashboard.cltp.com',
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'jaydeepgubba.com',
                  config('SERVER', default='127.0.0.1')]
 
 # Application definition
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
